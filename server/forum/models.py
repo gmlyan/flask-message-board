@@ -9,6 +9,25 @@ class User(db.Model):
     full_name = db.Column(db.String(120))
     age = db.Column(db.Integer)
 
+    def serialize(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'full_name': self.full_name,
+            'age': self.age
+        }
+
+    def update(self, data):
+        for key, value in data.items():
+            setattr(self, key, value)
+        db.session.commit()
+        return self
+
+    def destroy(self):
+        db.session.delete(self)
+        db.session.commit()
+
     def __repr__(self):
         return '<User %r>' % self.username
 

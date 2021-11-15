@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 from server.config import BaseConfig
+from server.forum.routes import register_routes
 from server.extensions import db
 from server.extensions import ma
 from server.extensions import migrate
@@ -11,6 +12,7 @@ def create_app():
     app.config.from_object('server.config.BaseConfig')
     api = Api(app, prefix='/api/v1')
     register_extenstions(app)
+    register_routes(api)
     return app
 
 

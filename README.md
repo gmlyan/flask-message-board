@@ -1,4 +1,4 @@
-# Forum
+# Message board
 
 This is a simple forum app written with Flask and Flask-RESTful.
 

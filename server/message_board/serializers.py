@@ -2,11 +2,12 @@ from server.extensions import ma
 from marshmallow import fields
 from server.message_board import models
 from server.mixins.serializers import CreateMixin
-from server.message_board.mixins.serializers import UserValidatorMixin
-from server.message_board.mixins.serializers import PostValidatorMixin
+from server.message_board.mixins.validators import EmailValidatorMixin
+from server.message_board.mixins.validators import UserValidatorMixin
+from server.message_board.mixins.validators import PostValidatorMixin
 
 
-class UserSerializer(ma.SQLAlchemyAutoSchema, CreateMixin):
+class UserSerializer(ma.SQLAlchemyAutoSchema, CreateMixin, EmailValidatorMixin):
     class Meta:
         model = models.User
 
@@ -71,4 +72,5 @@ user_update_serializer = UserUpdateSerializer()
 post_serializer = PostSerializer()
 post_update_serializer = PostUpdateSerializer()
 comment_serializer = CommentSerializer()
+comment_update_serializer = CommentUpdateSerializer()
 

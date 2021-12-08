@@ -4,6 +4,7 @@ from server.generic.views import GenericView
 from server.mixins import views as view_mixins
 
 
+# validate id arg existence in methods
 class UserView(GenericView, view_mixins.CRUDMixin):
 
     model = models.User
@@ -24,6 +25,8 @@ class PostView(GenericView, view_mixins.CRUDMixin):
 
 class CommentView(GenericView, view_mixins.CRUDMixin):
 
-    model = models.Post
+    model = models.Comment
     serializer = serializers.comment_serializer
-
+    serializers = {
+        'put': serializers.comment_update_serializer
+    }

@@ -3,6 +3,15 @@ from marshmallow import validates_schema
 from marshmallow import ValidationError
 
 
+class EmailValidatorMixin:
+
+    @validates_schema
+    def validate_email(self, data, **kwargs):
+        email = data.get('email')
+        if models.User.query.filter_by(email=email).first():
+            raise ValidationError('Email is already taken')
+
+
 class UserValidatorMixin:
 
     @validates_schema

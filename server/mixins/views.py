@@ -8,8 +8,11 @@ class CreateModelMixin:
         json_data = request.get_json()
         serializer = self.get_serializer('post')
         validated_data = serializer.load(json_data)
-        instance = serializer.create(validated_data)
+        instance = self.perform_create(serializer, validated_data)
         return instance, HTTPStatus.CREATED
+
+    def perform_create(self, serializer, validated_data):
+        return serializer.create(validated_data)
 
 
 class RetrieveModelMixin:
@@ -27,22 +30,28 @@ class RetrieveModelMixin:
 
 class UpdateModelMixin:
 
-    def put(self, id):
+    def put(self, id=None):
         json_data = request.get_json()
         serializer = self.get_serializer('put')
         validated_data = serializer.load(json_data)
         instance = self.get_instance(id)
-        instance.update(validated_data)
+        self.perform_update(instance, validated_data)
         return serializer.dump(instance), HTTPStatus.OK
+
+    def perform_update(self, instance, validated_data):
+        instance.update(validated_data)
 
 
 class DeleteModelMixin:
 
-    def delete(self, id):
+    def delete(self, id=None):
         serializer = self.get_serializer('delete')
         instance = self.get_instance(id)
-        instance.destroy()
+        self.perform_destroy(instance)
         return serializer.dump(instance), HTTPStatus.OK
+
+    def perform_destroy(self, instance):
+        instance.destroy()
 
 
 class CRUDMixin(CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, DeleteModelMixin):

@@ -40,6 +40,8 @@ class PostUpdateSerializer(ma.SQLAlchemyAutoSchema):
         include_fk = True
 
     id = fields.Integer(dump_only=True)
+    headline = fields.String(required=False)
+    content = fields.String(required=False)
     user_id = fields.Integer(dump_only=True)
     created_at = fields.DateTime(dump_only=True)
     edited_at = fields.DateTime(dump_only=True)
@@ -63,6 +65,7 @@ class CommentUpdateSerializer(ma.SQLAlchemyAutoSchema):
     id = fields.Integer(dump_only=True)
     user_id = fields.Integer(dump_only=True)
     post_id = fields.Integer(dump_only=True)
+    content = fields.String(required=False)
     created_at = fields.DateTime(dump_only=True)
     edited_at = fields.DateTime(dump_only=True)
 

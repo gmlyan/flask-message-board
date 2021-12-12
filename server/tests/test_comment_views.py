@@ -17,7 +17,7 @@ def test_add_comment_with_nonexistent_user(client):
     assert rv.json == {'_schema': ['User does not exist']}
 
 
-def test_add_comment_with_nonexistent_comment(client):
+def test_add_comment_with_nonexistent_post(client):
     test_comment_data = {'user_id': 2, 'post_id': 100, 'content': 'test_content'}
     rv = client.post('api/v1/comments/', json=test_comment_data)
     assert rv.status_code == HTTPStatus.BAD_REQUEST
